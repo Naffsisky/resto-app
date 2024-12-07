@@ -1,5 +1,5 @@
-# Gunakan image PHP dengan Nginx dan Composer
-FROM php:8.1-fpm
+# Gunakan image PHP 8.2 FPM
+FROM php:8.2-fpm
 
 # Install dependensi yang dibutuhkan
 RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev libfreetype6-dev zip git && \
