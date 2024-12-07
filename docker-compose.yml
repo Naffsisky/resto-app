@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+    laravel-app:
+        build:
+            context: .
+        container_name: laravel-app
+        ports:
+            - "8000:9000" # Menghubungkan port 8000 di host ke 9000 di container
+        volumes:
+            - .:/var/www
+        networks:
+            - app-network
+        environment:
+            - DB_CONNECTION=mysql
+            - DB_HOST=alibaba.prinafsika.world
+            - DB_PORT=3306
+            - DB_DATABASE=resto_pemmob
+            - DB_USERNAME=root
+            - DB_PASSWORD=Bluesky77_
+        depends_on:
+            - mysql
+
+networks:
+    app-network:
+        driver: bridge

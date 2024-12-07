@@ -1,0 +1,37 @@
+@base_url = http://localhost:8000
+@token = 4|TwrAOpXNTQgQzuSwjEtKOeeunKrJ9uw53Q90HgbY9acc0fce
+
+### Category GET ALL
+GET http://localhost:8000/api/category/
+Authorization: Bearer {{token}}
+
+### Get By Id
+GET http://localhost:8000/api/category/2
+Authorization: Bearer {{token}}
+
+### Get By Similar Query
+GET http://localhost:8000/api/category?q=s
+Authorization: Bearer {{token}}
+
+### Create
+POST http://localhost:8000/api/category/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "nama": "Samyangz"
+}
+
+### Update
+PUT http://localhost:8000/api/category/8
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "nama": "Sayang"
+}
+
+### Delete
+DELETE http://localhost:8000/api/category/10
+Authorization: Bearer {{token}}
+Content-Type: application/json
