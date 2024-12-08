@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -70,7 +72,13 @@ class ProductController extends Controller
             'tersedia.required' => 'Ketersediaan Produk wajib diisi!',
         ]);
 
-        $gambarPath = $request->file('gambar')->store('products', 'public');
+        // $gambarPath = $request->file('gambar')->store('products', 'public');
+        $gambarFile = $request->file('gambar');
+        $extension = $gambarFile->getClientOriginalExtension();
+        $gambarNama = time() . '_' . Str::random(10) . '.' . $extension;
+        $gambarPath = $gambarFile->storeAs('products', $gambarNama, 'public');
+        // Ambil nama file saja untuk disimpan ke database
+        $gambarNamaOnly = basename($gambarPath);
 
         if ($validator->fails()) {
             return response()->json([
@@ -84,7 +92,7 @@ class ProductController extends Controller
             $product = Product::create([
                 'nama' => $request->nama,
                 'harga' => $request->harga,
-                'gambar' => $gambarPath,
+                'gambar' => $gambarNamaOnly,
                 'variant' => $request->variant,
                 'kategori_id' => $request->kategori_id,
                 'tersedia' => $request->tersedia,
@@ -99,7 +107,7 @@ class ProductController extends Controller
                     'id' => $product->id,
                     'nama' => $product->nama,
                     'harga' => $product->harga,
-                    'gambar' => asset('storage/' . $product->gambar),
+                    'gambar' => asset('storage/products/' . $product->gambar),
                     'variant' => $product->variant,
                     'kategori' => $product->kategori ? $product->kategori->nama : null,
                     'ukuran' => $product->ukuran()->pluck('nama')->toArray(),
@@ -161,31 +169,74 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $product = Product::where('id', $id)->first();
+
+        if (!$product) {
+            return response()->json([
+                'message' => 'error',
+                'data' => 'Produk tidak ditemukan',
+                'status' => 404
+            ], 404);
+        }
+
         $validator = Validator::make($request->all(), [
-            'nama' => 'sometimes|string|max:255',
-            'harga' => 'sometimes|integer',
-            'gambar' => 'sometimes|string|max:255',
-            'variant' => 'sometimes|string|max:255',
-            'kategori_id' => 'sometimes|exists:categories,id',
-            'size_ids' => 'sometimes|array',
+            'nama' => 'sometimes|required|string|max:255',
+            'harga' => 'sometimes|required|integer',
+            'gambar' => 'sometimes|required|mimes:jpeg,png,jpg|max:2048',
+            'variant' => 'sometimes|required|string|max:255',
+            'kategori_id' => 'sometimes|required|exists:categories,id',
+            'size_ids' => 'sometimes|required|array',
             'size_ids.*' => 'exists:sizes,id',
-            'tersedia' => 'sometimes|boolean',
+            'tersedia' => 'sometimes|required|boolean',
         ], [
+            'nama.required' => 'Nama Produk wajib diisi!',
+            'harga.required' => 'Harga Produk wajib diisi!',
+            'gambar.required' => 'Gambar Produk wajib diisi!',
+            'variant.required' => 'Variant Produk wajib diisi!',
+            'kategori_id.required' => 'Kategori Produk wajib diisi!',
             'kategori_id.exists' => 'Kategori yang dipilih tidak valid!',
+            'size_ids.required' => 'Ukuran Produk wajib diisi!',
             'size_ids.*.exists' => 'Ukuran yang dipilih tidak valid!',
+            'tersedia.required' => 'Ketersediaan Produk wajib diisi!',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
-                'message' => 'error',
-                'data' => $validator->errors(),
+                'message' => 'Validation Error',
+                'errors' => $validator->errors(),
                 'status' => 422
             ], 422);
         }
 
         try {
             $product = Product::findOrFail($id);
-            $product->update($request->only(['nama', 'harga', 'gambar', 'variant', 'kategori_id', 'tersedia']));
+
+            if ($request->hasFile('gambar')) {
+
+                // Hapus file lama jika ada
+                if ($product->gambar) {
+                    $oldImagePath = 'products/' . $product->gambar;
+                    if (Storage::disk('public')->exists($oldImagePath)) {
+                        Storage::disk('public')->delete($oldImagePath);
+                        Log::info('Old image deleted successfully:', ['path' => $oldImagePath]);
+                    } else {
+                        Log::warning('Old image not found:', ['path' => $oldImagePath]);
+                    }
+                }
+
+                // Upload file baru
+                $gambarFile = $request->file('gambar');
+                $extension = $gambarFile->getClientOriginalExtension();
+                $gambarNama = time() . '_' . Str::random(10) . '.' . $extension;
+                $gambarPath = $gambarFile->storeAs('products', $gambarNama, 'public');
+                Log::info('New image saved:', ['path' => $gambarPath]);
+
+                $product->gambar = basename($gambarPath);
+            }
+
+            $product->fill($request->only(['nama', 'harga', 'variant', 'kategori_id', 'tersedia']));
+            $product->save();
 
             if ($request->has('size_ids')) {
                 $product->ukuran()->sync($request->size_ids);
@@ -197,7 +248,7 @@ class ProductController extends Controller
                     'id' => $product->id,
                     'nama' => $product->nama,
                     'harga' => $product->harga,
-                    'gambar' => $product->gambar,
+                    'gambar' => asset('storage/products/' . $product->gambar),
                     'variant' => $product->variant,
                     'kategori' => $product->kategori ? $product->kategori->nama : null,
                     'ukuran' => $product->ukuran()->pluck('nama')->toArray(),
@@ -206,12 +257,6 @@ class ProductController extends Controller
                 ],
                 'status' => 200
             ], 200);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return response()->json([
-                'message' => 'error',
-                'data' => 'Produk tidak ditemukan!',
-                'status' => 404
-            ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'error',
@@ -230,7 +275,7 @@ class ProductController extends Controller
             $product = Product::findOrFail($id);
 
             if ($product->gambar) {
-                Storage::disk('public')->delete($product->gambar);
+                Storage::disk('public')->delete('products/' . $product->gambar);
             }
 
             $product->delete();
