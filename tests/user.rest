@@ -1,12 +1,12 @@
-@base_url = http://localhost:8000
+@base_url = http://indo.prinafsika.world:8000
 @token = 4|TwrAOpXNTQgQzuSwjEtKOeeunKrJ9uw53Q90HgbY9acc0fce
 
 ###
-GET http://localhost:8000/api/user/
+GET {{base_url}}/api/user/
 Authorization: Bearer {{token}}
 
 ###
-POST http://localhost:8000/api/register/
+POST {{base_url}}/api/register/
 Content-Type: application/json
 
 {

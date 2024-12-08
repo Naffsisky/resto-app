@@ -2,15 +2,15 @@
 @token = 4|TwrAOpXNTQgQzuSwjEtKOeeunKrJ9uw53Q90HgbY9acc0fce
 
 ### size GET ALL
-GET http://localhost:8000/api/size/
+GET {{base_url}}/api/size/
 Authorization: Bearer {{token}}
 
 ### Get By Id
-GET http://localhost:8000/api/size/1
+GET {{base_url}}:8000/api/size/1
 Authorization: Bearer {{token}}
 
 ### Create
-POST http://localhost:8000/api/size/
+POST {{base_url}}:8000/api/size/
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -19,7 +19,7 @@ Content-Type: application/json
 }
 
 ### Update
-PUT http://localhost:8000/api/size/8
+PUT {{base_url}}:8000/api/size/8
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -28,6 +28,6 @@ Content-Type: application/json
 }
 
 ### Delete
-DELETE http://localhost:8000/api/size/4
+DELETE {{base_url}}:8000/api/size/4
 Authorization: Bearer {{token}}
 Content-Type: application/json
