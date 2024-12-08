@@ -1,33 +1,33 @@
 @base_url = http://localhost:8000
-@token = 4|TwrAOpXNTQgQzuSwjEtKOeeunKrJ9uw53Q90HgbY9acc0fce
+@token = 2|6rFDqsElEaj3FDtUrBjFW6CoHAqyFpGGZIVMZQqdacf90e5b
 
 ### size GET ALL
 GET {{base_url}}/api/size/
 Authorization: Bearer {{token}}
 
 ### Get By Id
-GET {{base_url}}:8000/api/size/1
+GET {{base_url}}/api/size/1
 Authorization: Bearer {{token}}
 
 ### Create
-POST {{base_url}}:8000/api/size/
+POST {{base_url}}/api/size/
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "nama": "Samyangz"
+    "nama": "Smallss"
 }
 
 ### Update
-PUT {{base_url}}:8000/api/size/8
+PUT {{base_url}}/api/size/3
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "nama": "Sayang"
+    "nama": "Medium"
 }
 
 ### Delete
-DELETE {{base_url}}:8000/api/size/4
+DELETE {{base_url}}/api/size/4
 Authorization: Bearer {{token}}
 Content-Type: application/json

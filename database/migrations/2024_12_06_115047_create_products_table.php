@@ -18,12 +18,10 @@ return new class extends Migration
             $table->string('gambar')->nullable();
             $table->string('variant')->nullable();
             $table->unsignedBigInteger('kategori_id'); // Foreign key ke kategori
-            $table->unsignedBigInteger('ukuran_id'); // Foreign key ke ukuran
             $table->boolean('tersedia')->default(true);
             $table->timestamps();
 
             $table->foreign('kategori_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->foreign('ukuran_id')->references('id')->on('sizes')->onDelete('cascade');
         });
     }
 

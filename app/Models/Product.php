@@ -26,6 +26,6 @@ class Product extends Model
 
     public function ukuran()
     {
-        return $this->belongsTo(Size::class, 'ukuran_id');
+        return $this->belongsToMany(Size::class, 'product_size', 'product_id', 'size_id');
     }
 }

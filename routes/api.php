@@ -16,7 +16,11 @@ Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('logout', [AuthController::class, 'logout']);
 
 Route::prefix('food')->middleware('auth:sanctum')->group(function () {
-    Route::get('/', [ProductController::class, 'show']);
+    Route::get('/', [ProductController::class, 'index']);
+    Route::get('/{id}', [ProductController::class, 'showById']);
+    Route::post('/', [ProductController::class, 'store']);
+    Route::put('/{id}', [ProductController::class, 'update']);
+    Route::delete('/{id}', [ProductController::class, 'destroy']);
 });
 
 Route::prefix('category')->middleware('auth:sanctum')->group(function () {

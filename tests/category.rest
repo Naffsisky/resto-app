@@ -1,12 +1,12 @@
-@base_url = http://indo.prinafsika.world:8000
-@token = 1|w2zfowhK4YDQUgIjCE1awetnKhFPUyXsP76JMmEL274e9dcf
+@base_url = http://localhost:8000
+@token = 2|6rFDqsElEaj3FDtUrBjFW6CoHAqyFpGGZIVMZQqdacf90e5b
 
 ### Category GET ALL
 GET {{base_url}}/api/category/
 Authorization: Bearer {{token}}
 
 ### Get By Id
-GET {{base_url}}/api/category/2
+GET {{base_url}}/api/category/1
 Authorization: Bearer {{token}}
 
 ### Get By Similar Query
@@ -19,16 +19,16 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "nama": "Samyangz"
+    "nama": "Desserts"
 }
 
 ### Update
-PUT {{base_url}}/api/category/8
+PUT {{base_url}}/api/category/2
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "nama": "Sayang"
+    "nama": "Mie"
 }
 
 ### Delete

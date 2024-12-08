@@ -1,12 +1,44 @@
 @base_url = http://localhost:8000
-@token = 4|TwrAOpXNTQgQzuSwjEtKOeeunKrJ9uw53Q90HgbY9acc0fce
+@token = 2|6rFDqsElEaj3FDtUrBjFW6CoHAqyFpGGZIVMZQqdacf90e5b
 
 ### Food
 GET http://localhost:8000/api/food/
 Authorization: Bearer {{token}}
 
+### Food By Id
+GET http://localhost:8000/api/food/11
+Authorization: Bearer {{token}}
 
+### Add New Food (POST request)
+POST http://localhost:8000/api/food/
+Authorization: Bearer {{token}}
+Content-Type: application/json
 
-### Size
-GET http://localhost:8000/api/size/
+{
+    "nama": "Pizza Margheritas",
+    "harga": 150000,
+    "variant": "Balado Jagung",
+    "kategori_id": 1,
+    "gambar": "url_gambar_pizza.jpg",
+    "size_ids": [1, 2, 3],
+    "tersedia": 1
+}
+
+### Update Food (PUT request)
+PUT http://localhost:8000/api/food/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "nama": "Ramen",
+    "harga": 12000,
+    "variant": "Pedas",
+    "kategori_id": 2,
+    "gambar": "url_gambar_pizza.jpg",
+    "size_ids": [1],
+    "tersedia": 1
+}
+
+### Delete Food (DELETE request)
+DELETE http://localhost:8000/api/food/12
 Authorization: Bearer {{token}}

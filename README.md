@@ -22,6 +22,7 @@ DB_PASSWORD=
 ```
 docker exec -it resto-api composer install
 docker exec -it resto-api php artisan key:generate
+docker exec -it resto-api php artisan storage:link
 docker exec -it resto-api php artisan migrate
 docker exec -it resto-api php artisan db:seed
 ```

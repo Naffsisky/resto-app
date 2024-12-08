@@ -1,5 +1,5 @@
-@base_url = http://indo.prinafsika.world:8000
-@token = 4|TwrAOpXNTQgQzuSwjEtKOeeunKrJ9uw53Q90HgbY9acc0fce
+@base_url = http://localhost:8000
+@token = 3|9J319lCIcZ1JienNneXkp9ukYQqRB8yDnKBb7MJp37b46567
 
 ###
 GET {{base_url}}/api/user/
@@ -10,8 +10,8 @@ POST {{base_url}}/api/register/
 Content-Type: application/json
 
 {
-    "name": "admin",
-    "email": "admin@mail.com",
+    "name": "adminz",
+    "email": "adminz@mail.com",
     "password": "admin1234",
     "password_confirmation": "admin1234"
 }
@@ -21,7 +21,7 @@ POST {{base_url}}/api/login
 Content-Type: application/json
 
 {
-    "email": "admin@mail.com",
+    "email": "adminz@mail.com",
     "password": "admin1234"
 }
 

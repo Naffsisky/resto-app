@@ -95,12 +95,12 @@ class CategoryController extends Controller
             ], 401);
         }
 
-        $categoryId = Category::where('id', $id)->first();
+        $category = Category::where('id', $id)->first();
 
-        if ($categoryId) {
+        if ($category) {
             return response([
                 'message' => 'success',
-                'data' => $categoryId,
+                'data' => $category,
                 'status' => 200
             ], 200);
         } else {
@@ -117,11 +117,11 @@ class CategoryController extends Controller
         try {
             $search = $request->input('q', '');
 
-            $categories = Category::when($search, function ($query, $search) {
+            $category = Category::when($search, function ($query, $search) {
                 $query->where('nama', 'LIKE', "%{$search}%");
             })->paginate(10);
 
-            if ($categories->total() === 0) {
+            if ($category->total() === 0) {
                 return response()->json([
                     'message' => 'Data tidak ditemukan',
                 ], 404);
@@ -129,7 +129,7 @@ class CategoryController extends Controller
 
             return response()->json([
                 'message' => 'success',
-                'data' => $categories,
+                'data' => $category,
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([

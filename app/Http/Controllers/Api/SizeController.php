@@ -68,7 +68,7 @@ class SizeController extends Controller
                 'status' => 400
             ], 400);
         } else {
-            $category = Size::create([
+            $size = Size::create([
                 'nama' => $request->nama,
             ]);
         }
@@ -76,9 +76,9 @@ class SizeController extends Controller
         return response([
             'message' => 'success',
             'data' => [
-                'id' => $category->id,
-                'nama' => $category->nama,
-                'tanggal_input' => $category->created_at,
+                'id' => $size->id,
+                'nama' => $size->nama,
+                'created_at' => $size->created_at,
             ],
             'status' => 201
         ], 201);
@@ -95,12 +95,12 @@ class SizeController extends Controller
             ], 401);
         }
 
-        $categoryId = Size::where('id', $id)->first();
+        $size = Size::where('id', $id)->first();
 
-        if ($categoryId) {
+        if ($size) {
             return response([
                 'message' => 'success',
-                'data' => $categoryId,
+                'data' => $size,
                 'status' => 200
             ], 200);
         } else {
@@ -118,9 +118,9 @@ class SizeController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $category = Size::where('id', $id)->first();
+            $size = Size::where('id', $id)->first();
 
-            if (!$category) {
+            if (!$size) {
                 return response()->json([
                     'message' => 'error',
                     'data' => 'Ukuran tidak ditemukan',
@@ -149,13 +149,13 @@ class SizeController extends Controller
                     'status' => 400
                 ], 400);
             } else {
-                $category->nama = $request->nama;
-                $category->save();
+                $size->nama = $request->nama;
+                $size->save();
             }
 
             return response()->json([
                 'message' => 'success',
-                'data' => $category,
+                'data' => $size,
                 'status' => 200
             ], 200);
         } catch (\Exception $e) {
@@ -173,15 +173,15 @@ class SizeController extends Controller
     public function destroy($id)
     {
         try {
-            $category = Size::find($id);
-            if (!$category) {
+            $size = Size::find($id);
+            if (!$size) {
                 return response()->json([
                     'message' => 'error',
                     'data' => 'Ukuran tidak ditemukan',
                     'status' => 404
                 ], 404);
             }
-            $category->delete();
+            $size->delete();
             return response()->json([
                 'message' => 'success',
                 'data' => 'Ukuran berhasil dihapus',
