@@ -1,4 +1,4 @@
-@base_url = http://localhost:8000
+@base_url = http://indo.prinafsika.world:8000
 @token = 2|6rFDqsElEaj3FDtUrBjFW6CoHAqyFpGGZIVMZQqdacf90e5b
 
 ### Category GET ALL

@@ -18,7 +18,6 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         try {
-
             $product = Product::with(['kategori', 'ukuran'])->paginate(10);
 
             if ($product->isNotEmpty()) {
@@ -125,12 +124,6 @@ class ProductController extends Controller
      */
     public function showById(Request $request, $id)
     {
-        if (!$request->user()) {
-            return response()->json([
-                'message' => 'Unauthorized',
-            ], 401);
-        }
-
         $product = Product::with(['kategori', 'ukuran'])->find($id);
 
         if ($product) {
