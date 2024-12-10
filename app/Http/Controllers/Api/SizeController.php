@@ -15,12 +15,6 @@ class SizeController extends Controller
     public function index(Request $request)
     {
         try {
-            if (!$request->user()) {
-                return response()->json([
-                    'message' => 'Unauthorized',
-                ], 401);
-            }
-
             $size = Size::paginate(10);
 
             if ($size->isNotEmpty()) {
@@ -89,12 +83,6 @@ class SizeController extends Controller
      */
     public function showById(Request $request, $id)
     {
-        if (!$request->user()) {
-            return response()->json([
-                'message' => 'Unauthorized',
-            ], 401);
-        }
-
         $size = Size::where('id', $id)->first();
 
         if ($size) {

@@ -1,5 +1,5 @@
-@base_url = http://localhost:8000
-@token = 2|6rFDqsElEaj3FDtUrBjFW6CoHAqyFpGGZIVMZQqdacf90e5b
+@base_url = http://indo.prinafsika.world:8000
+@token = 1|xODJuvOdR7Dh5zKTp6gqU3LmfLiE7xW8eAR1Awc43310e786
 
 ### Food
 GET {{base_url}}/api/food/
@@ -39,5 +39,5 @@ Content-Type: application/json
 }
 
 ### Delete Food (DELETE request)
-DELETE {{base_url}}/api/food/22
+DELETE {{base_url}}/api/food/1
 Authorization: Bearer {{token}}

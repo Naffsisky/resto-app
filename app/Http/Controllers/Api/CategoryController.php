@@ -89,12 +89,6 @@ class CategoryController extends Controller
      */
     public function showById(Request $request, $id)
     {
-        if (!$request->user()) {
-            return response()->json([
-                'message' => 'Unauthorized',
-            ], 401);
-        }
-
         $category = Category::where('id', $id)->first();
 
         if ($category) {

@@ -27,7 +27,6 @@ class ProductFactory extends Factory
             'gambar' => $this->faker->imageUrl(640, 480, 'food', true, 'makanan'), // URL gambar makanan
             'variant' => $this->faker->randomElement(['Pedas', 'Manis', 'Asin', 'Gurih']), // Variant random
             'kategori_id' => Category::inRandomOrder()->first()->id, // ID kategori acak
-            'ukuran_id' => Size::inRandomOrder()->first()->id, // ID ukuran acak
             'tersedia' => $this->faker->boolean(80), // 80% tersedia
         ];
     }

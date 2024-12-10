@@ -1,5 +1,5 @@
-@base_url = http://localhost:8000
-@token = 3|9J319lCIcZ1JienNneXkp9ukYQqRB8yDnKBb7MJp37b46567
+@base_url = http://indo.prinafsika.world:8000
+@token = 2|IsUljdKJU6kIs4ZLpMQmRlkSiYcoXpfxkSxOv77j8c71ae27
 
 ###
 GET {{base_url}}/api/user/

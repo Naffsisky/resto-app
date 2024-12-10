@@ -19,12 +19,6 @@ class ProductController extends Controller
     {
         try {
 
-            if (!$request->user()) {
-                return response()->json([
-                    'message' => 'Unauthorized',
-                ], 401);
-            }
-
             $product = Product::with(['kategori', 'ukuran'])->paginate(10);
 
             if ($product->isNotEmpty()) {
