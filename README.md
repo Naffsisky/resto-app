@@ -26,5 +26,3 @@ docker exec -it resto-api php artisan storage:link
 docker exec -it resto-api php artisan migrate
 docker exec -it resto-api php artisan db:seed
 ```
-
-<img src="https://data-collection.s3.nevaobjects.id/logo.png" style="width: 100px; height: 100px;" />
